@@ -62,6 +62,92 @@ function Welcome({ name }) {
 \`\`\`
 
 Here, Welcome is a component and name is a prop. React updates the UI when the data used by a component changes.`;
+  } else if (q.includes("promise") || q.includes("promises")) {
+    answer = `**What is a Promise?**
+A JavaScript Promise represents the eventual result of an asynchronous operation, such as loading data from a server. A Promise can be **pending**, **fulfilled**, or **rejected**.
+
+**Example using then() and catch()**
+\`\`\`js
+const userPromise = fetch("/api/user");
+
+userPromise
+  .then(response => {
+    if (!response.ok) throw new Error("Request failed");
+    return response.json();
+  })
+  .then(user => console.log("User:", user))
+  .catch(error => console.error("Error:", error));
+\`\`\`
+
+**How it works**
+- \`fetch()\` returns a Promise immediately; the request completes later.
+- The first \`.then()\` handles the HTTP response and returns parsed JSON.
+- The next \`.then()\` receives that returned data.
+- \`.catch()\` handles errors from the request or earlier handlers.
+
+**The same flow with async/await**
+\`\`\`js
+async function loadUser() {
+  try {
+    const response = await fetch("/api/user");
+    if (!response.ok) throw new Error("Request failed");
+    const user = await response.json();
+    console.log("User:", user);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+\`\`\`
+
+`;
+  } else if (q.includes("async/await") || q.includes("async await") || q.includes("await")) {
+    answer = `**What are async and await?**
+\`async\` marks a function so it always returns a Promise. \`await\` pauses that function until a Promise settles, without blocking the browser's main thread.
+
+**Example**
+\`\`\`js
+async function getProducts() {
+  try {
+    const response = await fetch("/api/products");
+    if (!response.ok) throw new Error("Could not load products");
+    const products = await response.json();
+    return products;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+\`\`\`
+
+**Key points**
+- Use \`try/catch\` to handle rejected Promises.
+- \`await\` can be used inside an async function (and at supported top-level module scopes).
+- Use \`Promise.all()\` when independent asynchronous tasks can run together.
+- Awaiting one task before starting another makes them run sequentially.`;
+  } else if (q.includes("useState") || q.includes("use state") || q.includes("react hooks") || q.includes("hooks")) {
+    answer = `**What are React Hooks?**
+Hooks let function components use React features such as state and effects. Common examples are \`useState\` and \`useEffect\`.
+
+**Example: useState**
+\`\`\`jsx
+import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount(current => current + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+\`\`\`
+
+**How it works**
+- \`useState(0)\` creates state with an initial value of zero.
+- \`count\` is the current value; \`setCount\` requests an update.
+- When state changes, React renders the component again.
+- Call Hooks at the top level of a component or custom Hook, not inside conditions or loops.`;
   } else if (q.includes("javascript") || q.includes(" js") || q.startsWith("js")) {
     answer = `**JavaScript** is a programming language used to add behavior to websites. It also runs on servers and in development tools.
 
@@ -69,7 +155,7 @@ Here, Welcome is a component and name is a prop. React updates the UI when the d
 - Variables: const and let
 - Functions and arrow functions
 - Arrays, objects, map, and filter
-- Promises and async/await
+- Asynchronous programming (Promises and async/await)
 - DOM events and browser APIs
 
 **Example**
